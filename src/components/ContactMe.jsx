@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 
 const CONTACT_INFO = {
   email: "ak537664@gmail.com",
@@ -54,505 +54,38 @@ const SOCIAL_LINKS = [
 ];
 
 const ContactMe = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const sectionRef = useRef(null);
-
-  // Mouse tracking for parallax effects
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
-        setMousePos({
-          x: (e.clientX - rect.left - rect.width / 2) / rect.width,
-          y: (e.clientY - rect.top - rect.height / 2) / rect.height,
-        });
-      }
-    };
-
-    const section = sectionRef.current;
-    if (section) {
-      section.addEventListener("mousemove", handleMouseMove);
-      return () => section.removeEventListener("mousemove", handleMouseMove);
-    }
-  }, []);
-
-  // Parallax calculation
-  const parallax = (factor) => ({
-    transform: `translate3d(${mousePos.x * factor * 8}px, ${
-      mousePos.y * factor * 8
-    }px, 0)`,
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus(null), 5000);
-    }
-  };
-
   return (
     <section
-      ref={sectionRef}
       id="contact"
-      className="relative min-h-screen w-full text-white overflow-hidden"
+      className="relative w-full text-white overflow-hidden py-12 md:py-16"
     >
-      <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:py-20">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs tracking-widest uppercase text-cyan-300 mb-6">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+        {/* Compact Header */}
+        <div className="flex items-center gap-3 mb-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-widest uppercase text-cyan-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
             <span>Contact</span>
           </div>
-
-          <h2 className="text-4xl md:text-6xl font-black leading-tight mb-4">
-            <span className="bg-gradient-to-r from-cyan-300 via-sky-200 to-white bg-clip-text text-transparent">
-              Let's Work Together
-            </span>
-          </h2>
-
-          <p className="text-white/70 text-lg max-w-2xl mx-auto">
-            Ready to bring your ideas to life? Let's discuss your project and
-            create something amazing together.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Contact Form */}
-          {/* <div className="order-2 lg:order-1">
-            <ContactForm
-              formData={formData}
-              handleInputChange={handleInputChange}
-              handleSubmit={handleSubmit}
-              isSubmitting={isSubmitting}
-              submitStatus={submitStatus}
-              parallax={parallax}
-            />
-          </div> */}
-
-          {/* Contact Information */}
-          {/* <div className="order-1 lg:order-2">
-            <ContactInfo parallax={parallax} />
-          </div> */}
         </div>
 
         {/* Social Links */}
-        <div className="mt-20">
-          <SocialLinks parallax={parallax} />
-        </div>
-
-        {/* Floating Elements */}
-        <FloatingContactElements mousePos={mousePos} />
+        <SocialLinks />
       </div>
     </section>
   );
 };
 
-const ContactForm = ({
-  formData,
-  handleInputChange,
-  handleSubmit,
-  isSubmitting,
-  submitStatus,
-  parallax,
-}) => {
+const SocialLinks = () => {
   return (
-    <div className="group relative" style={parallax(0.005)}>
-      {/* Glow effect */}
-      <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-cyan-400/20 to-purple-400/20 opacity-0 blur-2xl transition-opacity group-hover:opacity-100" />
-
-      {/* Form container */}
-      <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden">
-        {/* Terminal header */}
-        <div className="flex items-center gap-2 px-6 py-4 border-b border-white/10">
-          <span className="h-3 w-3 rounded-full bg-red-400/70" />
-          <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
-          <span className="h-3 w-3 rounded-full bg-green-400/70" />
-          <span className="ml-auto font-mono text-xs text-white/60">
-            contact/message.form
-          </span>
-        </div>
-
-        <div className="p-8">
-          <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-cyan-400" />
-            Send Message
-          </h3>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-white/80 mb-2"
-                >
-                  Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 backdrop-blur-sm transition focus:border-cyan-400/50 focus:outline-none focus:ring-1 focus:ring-cyan-400/50"
-                  placeholder="Your full name"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-white/80 mb-2"
-                >
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 backdrop-blur-sm transition focus:border-cyan-400/50 focus:outline-none focus:ring-1 focus:ring-cyan-400/50"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="subject"
-                className="block text-sm font-medium text-white/80 mb-2"
-              >
-                Subject *
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 backdrop-blur-sm transition focus:border-cyan-400/50 focus:outline-none focus:ring-1 focus:ring-cyan-400/50"
-                placeholder="What's this about?"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-white/80 mb-2"
-              >
-                Message *
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                required
-                rows={6}
-                className="w-full rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-white placeholder-white/60 backdrop-blur-sm transition focus:border-cyan-400/50 focus:outline-none focus:ring-1 focus:ring-cyan-400/50 resize-none"
-                placeholder="Tell me about your project..."
-              />
-            </div>
-
-            {/* Submit button */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`group/btn w-full flex items-center justify-center gap-3 rounded-lg px-6 py-4 font-medium transition-all ${
-                isSubmitting
-                  ? "bg-white/10 text-white/50 cursor-not-allowed"
-                  : "bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)]"
-              }`}
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-white" />
-                  <span>Sending...</span>
-                </>
-              ) : (
-                <>
-                  <span>Send Message</span>
-                  <svg
-                    className="w-5 h-5 transition-transform group-hover/btn:translate-x-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                    />
-                  </svg>
-                </>
-              )}
-            </button>
-
-            {/* Status messages */}
-            {submitStatus === "success" && (
-              <div className="rounded-lg border border-green-400/30 bg-green-500/20 px-4 py-3 text-green-200">
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>
-                    Message sent successfully! I'll get back to you soon.
-                  </span>
-                </div>
-              </div>
-            )}
-
-            {submitStatus === "error" && (
-              <div className="rounded-lg border border-red-400/30 bg-red-500/20 px-4 py-3 text-red-200">
-                <div className="flex items-center gap-2">
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <span>
-                    Something went wrong. Please try again or contact me
-                    directly.
-                  </span>
-                </div>
-              </div>
-            )}
-          </form>
-        </div>
-      </div>
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+      {SOCIAL_LINKS.map((social) => (
+        <SocialLinkCard key={social.name} social={social} />
+      ))}
     </div>
   );
 };
 
-const ContactInfo = ({ parallax }) => {
-  return (
-    <div className="space-y-8">
-      {/* Contact details card */}
-      <div className="group relative" style={parallax(0.003)}>
-        <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-purple-400/20 to-pink-400/20 opacity-0 blur-2xl transition-opacity group-hover:opacity-100" />
-
-        <div className="relative rounded-3xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden">
-          <div className="flex items-center gap-2 px-6 py-4 border-b border-white/10">
-            <span className="h-3 w-3 rounded-full bg-red-400/70" />
-            <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
-            <span className="h-3 w-3 rounded-full bg-green-400/70" />
-            <span className="ml-auto font-mono text-xs text-white/60">
-              contact/info.json
-            </span>
-          </div>
-
-          <div className="p-8">
-            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-              <span className="h-2 w-2 rounded-full bg-purple-400" />
-              Get In Touch
-            </h3>
-
-            <div className="space-y-6">
-              <ContactInfoItem
-                icon="email"
-                label="Email"
-                value={CONTACT_INFO.email}
-                href={`mailto:${CONTACT_INFO.email}`}
-              />
-              <ContactInfoItem
-                icon="phone"
-                label="Phone"
-                value={CONTACT_INFO.phone}
-                href={`tel:${CONTACT_INFO.phone}`}
-              />
-              <ContactInfoItem
-                icon="location"
-                label="Location"
-                value={CONTACT_INFO.location}
-              />
-              <ContactInfoItem
-                icon="clock"
-                label="Timezone"
-                value={CONTACT_INFO.timezone}
-              />
-            </div>
-
-            <div className="mt-8 p-4 rounded-lg border border-green-400/30 bg-green-500/10">
-              <div className="flex items-center gap-3">
-                <div className="h-3 w-3 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-green-200 font-medium">
-                  {CONTACT_INFO.availability}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick stats */}
-      <div className="grid grid-cols-2 gap-4">
-        <StatCard
-          number="24h"
-          label="Response Time"
-          parallax={parallax}
-          factor={0.006}
-        />
-        <StatCard
-          number="100%"
-          label="Client Satisfaction"
-          parallax={parallax}
-          factor={0.008}
-        />
-      </div>
-    </div>
-  );
-};
-
-const ContactInfoItem = ({ icon, label, value, href }) => {
-  const IconComponent = ({ className }) => {
-    const iconMap = {
-      email: (
-        <svg
-          className={className}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          />
-        </svg>
-      ),
-      phone: (
-        <svg
-          className={className}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-          />
-        </svg>
-      ),
-      location: (
-        <svg
-          className={className}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-        </svg>
-      ),
-      clock: (
-        <svg
-          className={className}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
-    };
-
-    return iconMap[icon] || null;
-  };
-
-  const content = (
-    <div className="flex items-center gap-4 group/item">
-      <div className="flex-shrink-0 h-12 w-12 rounded-lg border border-white/20 bg-white/10 flex items-center justify-center group-hover/item:border-cyan-400/50 transition-colors">
-        <IconComponent className="h-6 w-6 text-white/80 group-hover/item:text-cyan-300 transition-colors" />
-      </div>
-      <div>
-        <p className="text-sm text-white/60">{label}</p>
-        <p className="text-white font-medium group-hover/item:text-cyan-300 transition-colors">
-          {value}
-        </p>
-      </div>
-    </div>
-  );
-
-  return href ? (
-    <a href={href} className="block transition-transform hover:translate-x-1">
-      {content}
-    </a>
-  ) : (
-    <div className="transition-transform hover:translate-x-1">{content}</div>
-  );
-};
-
-const SocialLinks = ({ parallax }) => {
-  return (
-    <div className="text-center" style={parallax(0.004)}>
-      {/* <h3 className="text-2xl font-bold text-white mb-8 flex items-center justify-center gap-3">
-        <span className="h-2 w-2 rounded-full bg-cyan-400" />
-        Connect With Me
-      </h3> */}
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {SOCIAL_LINKS.map((social, index) => (
-          <SocialLinkCard key={social.name} social={social} index={index} />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const SocialLinkCard = ({ social, index }) => {
+const SocialLinkCard = ({ social }) => {
   const IconComponent = ({ className }) => {
     const iconMap = {
       github: (
@@ -634,80 +167,31 @@ const SocialLinkCard = ({ social, index }) => {
           : undefined
       }
       className="group relative block"
-      style={{ animationDelay: `${index * 0.1}s` }}
     >
       <div
-        className={`absolute -inset-1 rounded-2xl bg-gradient-to-r ${social.color} opacity-0 blur-xl transition-opacity group-hover:opacity-40`}
+        className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r ${social.color} opacity-0 blur-lg transition-opacity duration-300 group-hover:opacity-30`}
       />
 
-      <div className="relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all group-hover:border-white/20 group-hover:bg-white/10 group-hover:scale-105">
-        <div className="flex flex-col items-center gap-3">
+      <div className="relative rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm transition-all group-hover:border-white/20 group-hover:bg-white/10">
+        <div className="flex flex-col items-center gap-2">
           <div
-            className={`h-12 w-12 rounded-lg ${
+            className={`h-10 w-10 rounded-lg ${
               social.icon === "x"
                 ? "bg-black border border-white/20"
                 : `bg-gradient-to-r ${social.color}`
-            } p-3 flex items-center justify-center`}
+            } p-2 flex items-center justify-center`}
           >
-            <IconComponent className="h-6 w-6 text-white" />
+            <IconComponent className="h-5 w-5 text-white" />
           </div>
           <div className="text-center">
-            <h4 className="font-semibold text-white">{social.name}</h4>
-            <p className="text-xs text-white/60 mt-1 font-mono">
+            <h4 className="text-sm font-semibold text-white">{social.name}</h4>
+            <p className="text-xs text-white/50 mt-0.5 font-mono truncate max-w-full">
               {social.username}
             </p>
           </div>
         </div>
       </div>
     </a>
-  );
-};
-
-const StatCard = ({ number, label, parallax, factor }) => {
-  return (
-    <div className="text-center group" style={parallax(factor)}>
-      <div className="relative inline-block">
-        <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-cyan-400/20 to-purple-400/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity" />
-        <div className="relative rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-          <div className="text-2xl font-black text-transparent bg-gradient-to-r from-cyan-300 to-white bg-clip-text mb-1">
-            {number}
-          </div>
-          <div className="text-white/70 text-xs font-mono">{label}</div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const FloatingContactElements = ({ mousePos }) => {
-  const elements = [
-    { text: "@", x: 10, y: 20, delay: 0 },
-    { text: "📧", x: 90, y: 15, delay: 0.5 },
-    { text: "📱", x: 15, y: 80, delay: 1 },
-    { text: "💼", x: 85, y: 75, delay: 1.5 },
-    { text: "🌐", x: 50, y: 10, delay: 2 },
-    { text: "📄", x: 25, y: 60, delay: 2.5 },
-  ];
-
-  return (
-    <div className="pointer-events-none absolute inset-0">
-      {elements.map((element, index) => (
-        <div
-          key={index}
-          className="absolute text-cyan-400/15 text-2xl select-none"
-          style={{
-            left: `${element.x}%`,
-            top: `${element.y}%`,
-            transform: `translate3d(${mousePos.x * (5 + index * 2)}px, ${
-              mousePos.y * (3 + index * 2)
-            }px, 0)`,
-            animationDelay: `${element.delay}s`,
-          }}
-        >
-          {element.text}
-        </div>
-      ))}
-    </div>
   );
 };
 

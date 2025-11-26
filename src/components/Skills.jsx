@@ -4,6 +4,7 @@ import {
   SiJavascript,
   SiMongodb,
   SiPostgresql,
+  SiSolana,
 } from "react-icons/si";
 
 import { FaGithub, FaDocker } from "react-icons/fa";
@@ -16,12 +17,13 @@ const CATEGORIES = [
   { key: "frontend", label: "Frontend" },
   { key: "backend", label: "Backend" },
   { key: "database", label: "Database" },
-  { key: "tools", label: "Tools & Platforms" },
+  { key: "web3", label: "Web3" },
 ];
 
 const SKILLS = [
   // Frontend
   { name: "TypeScript", level: 90, category: "frontend" },
+  { name: "Next.js", level: 92, category: "frontend" },
   { name: "React.js", level: 92, category: "frontend" },
   { name: "Redux", level: 85, category: "frontend" },
   { name: "Tailwind CSS", level: 90, category: "frontend" },
@@ -39,10 +41,7 @@ const SKILLS = [
   { name: "MySQL", level: 75, category: "database" },
   { name: "PostgreSQL", level: 78, category: "database" },
   // Tools & Platforms
-  { name: "Git", level: 92, category: "tools" },
-  { name: "GitHub", level: 90, category: "tools" },
-  { name: "Vercel", level: 85, category: "tools" },
-  { name: "Netlify", level: 82, category: "tools" },
+  { name: "Solana", level: 92, category: "web3" },
 ];
 
 const ICONS = [
@@ -54,6 +53,8 @@ const ICONS = [
   },
   { label: "Node.js", glyph: <FaNode className="text-green-300" /> },
   { label: "Next.js", glyph: <RiNextjsFill className="text-white" /> },
+  { label: "Solana", glyph: <SiSolana className="text-white" /> },
+
   { label: "Tailwind", glyph: <RiTailwindCssFill className="text-blue-300" /> },
   { label: "MongoDB", glyph: <SiMongodb className="text-green-300" /> },
   { label: "Postgres", glyph: <SiPostgresql className="text-blue-300" /> },

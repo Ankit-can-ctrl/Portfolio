@@ -117,14 +117,9 @@ const HeroSection = () => {
             mounted ? "opacity-100" : "opacity-0"
           } transition-opacity duration-700`}
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs tracking-widest uppercase text-cyan-300">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span>Live coding</span>
-          </div>
-
           <h1 className="mt-6 text-5xl md:text-7xl font-black leading-tight">
             <span className="bg-gradient-to-r from-cyan-300 via-sky-200 to-white bg-clip-text text-transparent">
-              Building delightful code
+              Clean logic. Strong UI. No nonsense.
             </span>
           </h1>
 

@@ -4,6 +4,7 @@ import HeroSection from "./components/HeroSection";
 import Skills from "./components/Skills";
 import Exp from "./components/Exp";
 import Projects from "./components/Projects";
+import WorkingOn from "./components/WorkingOn";
 import Testimonials from "./components/Testimonial";
 import ContactMe from "./components/ContactMe";
 
@@ -13,6 +14,7 @@ const App = () => {
     { id: "skills", component: <Skills /> },
     { id: "experience", component: <Exp /> },
     { id: "projects", component: <Projects /> },
+    { id: "working-on", component: <WorkingOn /> },
     { id: "testimonials", component: <Testimonials /> },
     { id: "contact", component: <ContactMe /> },
   ];

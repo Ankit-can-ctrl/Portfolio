@@ -204,9 +204,29 @@ const PROJECTS = [
       "AI article summarizer built with React.js. It allows users to summarize articles quickly and easily.",
     ],
   },
+  {
+    id: 8,
+    title: "Solana dApp",
+    category: "Web3",
+    description: "Detects your wallet, send airdrop, send SOL",
+    longDescription: "Interactive dApp allows to intract with your wallet.",
+    image: "/projects/crypto.jpg",
+    technologies: ["React", "Solana", "Tailwind"],
+    github: "https://github.com/Ankit-can-ctrl/wallet-adapter",
+    live: "https://wallet-adapter-beige.vercel.app/",
+    status: "completed",
+    year: "2025",
+    color: "from-yellow-400 to-orange-500",
+    features: [
+      "Connect your wallet",
+      "Send airdrop to devnet network",
+      "Transfer SOL",
+      "Transaction History",
+    ],
+  },
 ];
 
-const CATEGORIES = ["All", "Full Stack", "Frontend", "Backend"];
+const CATEGORIES = ["All", "Full Stack", "Frontend", "Backend", "Web3"];
 
 const Projects = () => {
   const [activeCategory, setActiveCategory] = useState("All");

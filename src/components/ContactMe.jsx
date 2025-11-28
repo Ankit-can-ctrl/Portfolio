@@ -46,7 +46,7 @@ const SOCIAL_LINKS = [
   },
   {
     name: "Resume",
-    url: "https://drive.google.com/file/d/1mPGmEgV6os5hxWrHpE_WsRfPlzJ5ZpqO/view?usp=sharing",
+    url: "https://drive.google.com/file/d/1Wi-oMwunLjWbDlDy-z9mr3-PFmsuVOZI/view?usp=sharing",
     icon: "download",
     color: "from-purple-400 to-purple-600",
     username: "Download CV",
